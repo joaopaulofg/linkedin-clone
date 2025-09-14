@@ -1,0 +1,61 @@
+core-service/
+ ├── src/main/java/com/seuprojeto/core/
+ │   ├── CoreServiceApplication.java   # Classe principal
+ │   │
+ │   ├── domain/                       # Núcleo da regra de negócio
+ │   │   ├── model/                    # Entidades (Users, Companies, Jobs, etc.)
+ │   │   │   ├── User.java
+ │   │   │   ├── Company.java
+ │   │   │   ├── Job.java
+ │   │   │   ├── Post.java
+ │   │   │   ├── Comment.java
+ │   │   │   ├── Message.java
+ │   │   │   └── Skill.java (separado para user_skills)
+ │   │   ├── repository/               # Interfaces do domínio
+ │   │   │   ├── UserRepository.java
+ │   │   │   ├── CompanyRepository.java
+ │   │   │   ├── JobRepository.java
+ │   │   │   ├── PostRepository.java
+ │   │   │   └── MessageRepository.java
+ │   │   └── service/                  # Regras de negócio
+ │   │       ├── UserService.java
+ │   │       ├── AuthService.java
+ │   │       ├── PostService.java
+ │   │       └── MessageService.java
+ │   │
+ │   ├── application/                  # Casos de uso (DTOs + mapeamento)
+ │   │   ├── dto/
+ │   │   │   ├── UserDTO.java
+ │   │   │   ├── CompanyDTO.java
+ │   │   │   ├── JobDTO.java
+ │   │   │   ├── PostDTO.java
+ │   │   │   ├── CommentDTO.java
+ │   │   │   └── MessageDTO.java
+ │   │   └── mapper/
+ │   │       ├── UserMapper.java
+ │   │       └── PostMapper.java
+ │   │
+ │   ├── infrastructure/               # Implementações técnicas
+ │   │   ├── persistence/
+ │   │   │   ├── JpaUserRepository.java
+ │   │   │   ├── JpaCompanyRepository.java
+ │   │   │   └── JpaPostRepository.java
+ │   │   ├── security/                 # JWT + autenticação
+ │   │   │   ├── JwtFilter.java
+ │   │   │   ├── JwtUtil.java
+ │   │   │   └── SecurityConfig.java
+ │   │   └── messaging/                # Kafka producers/consumers
+ │   │       ├── UserProducer.java
+ │   │       └── EventConsumer.java
+ │   │
+ │   └── interfaces/                   # Controllers REST
+ │       ├── AuthController.java
+ │       ├── UserController.java
+ │       ├── CompanyController.java
+ │       ├── JobController.java
+ │       ├── PostController.java
+ │       └── MessageController.java
+ │
+ └── src/main/resources/
+     ├── application.yml
+     └── schema.sql (opcional p/ inicialização)
