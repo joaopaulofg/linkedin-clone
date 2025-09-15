@@ -1,4 +1,49 @@
+version: '3.9'
+
 services:
+  # Zookeeper
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.9.1
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    healthcheck:
+      test: ["CMD", "bash", "-c", "echo 'ruok' | nc localhost 2181"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # Kafka
+  kafka:
+    image: confluentinc/cp-kafka:7.9.1
+    container_name: kafka_broker
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9094
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_SOCKET_REQUEST_MAX_BYTES: 104857600
+      KAFKA_MESSAGE_MAX_BYTES: 104857600
+    ports:
+      - "9092:9092"
+      - "9094:9094"
+    healthcheck:
+      test: ["CMD", "kafka-broker-api-versions", "--bootstrap-server", "localhost:9092"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 40s
+
+  # Banco de dados PostgreSQL
   db:
     image: postgres:16
     container_name: postgres_db
@@ -11,8 +56,14 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U linkedin -d core_service"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
-  app:
+  # Core service
+  core-app:
     build:
       context: ./core-service
       dockerfile: Dockerfile
@@ -25,8 +76,51 @@ services:
       SPRING_DATASOURCE_USERNAME: linkedin
       SPRING_DATASOURCE_PASSWORD: linkedin123
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+
+  # Neo4j
+  neo4j:
+    image: neo4j:5
+    container_name: neo4j_db
+    restart: always
+    environment:
+      NEO4J_AUTH: neo4j/password
+    ports:
+      - "7687:7687"
+      - "7474:7474"
+    volumes:
+      - neo4j_data:/data
+    healthcheck:
+      test: ["CMD", "cypher-shell", "-u", "neo4j", "-p", "password", "RETURN 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # People-graph-service
+  people-graph-app:
+    build:
+      context: ./people-graph-service
+      dockerfile: Dockerfile
+    container_name: people_graph_service_app
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATA_NEO4J_URI: bolt://neo4j:7687
+      SPRING_DATA_NEO4J_USERNAME: neo4j
+      SPRING_DATA_NEO4J_PASSWORD: password
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
 
 volumes:
   postgres_data:
+  neo4j_data:

@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/meubanco
-    username: joao
-    password: senha123
+    url: jdbc:postgresql://localhost:5433/core_service
+    username: aaaa
+    password: aaaa
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -18,14 +18,9 @@ spring:
 
   kafka:
     bootstrap-servers: localhost:9092
-    consumer:
-      group-id: core-service
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 jwt:
   secret: meuSegredoSuperSecreto123  # chave usada para assinar o token

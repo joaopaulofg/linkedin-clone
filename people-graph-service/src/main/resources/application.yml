@@ -1,0 +1,15 @@
+server:
+  port: ${SERVER_PORT:8081} # pega da variável de ambiente SERVER_PORT, padrão 8081
+
+spring:
+  neo4j:
+    uri: bolt://neo4j:7687
+    authentication:
+      username: neo4j
+      password: password
+
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      group-id: people-graph-group
+      auto-offset-reset: earliest

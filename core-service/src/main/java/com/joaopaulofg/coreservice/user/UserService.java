@@ -1,5 +1,6 @@
 package com.joaopaulofg.coreservice.user;
 
+import com.joaopaulofg.coreservice.infra.kafka.KafkaPublisher;
 import com.joaopaulofg.coreservice.user.dtos.UserDto;
 import com.joaopaulofg.coreservice.user.exceptions.EmailAlreadyExistsException;
 import com.joaopaulofg.coreservice.user.exceptions.UserNotFoundException;
@@ -17,6 +18,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+    private final KafkaPublisher kafkaPublisher;
 
     public User register(User newUser) {
         if(userRepository.findByEmail(newUser.getEmail()).isPresent()) {
@@ -31,7 +33,10 @@ public class UserService {
                 .headLine(newUser.getHeadLine())
                 .build();
 
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        kafkaPublisher.sendUserCreatedEvent(savedUser);
+        return savedUser;
     }
 
     public boolean login(String email,  String password) {

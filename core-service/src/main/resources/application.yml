@@ -17,15 +17,10 @@ spring:
     show-sql: true       # Exibe as queries no console
 
   kafka:
-    bootstrap-servers: localhost:9092
-    consumer:
-      group-id: core-service
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    bootstrap-servers: kafka:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 jwt:
   secret: meuSegredoSuperSecreto123  # chave usada para assinar o token
