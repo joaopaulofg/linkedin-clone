@@ -1,15 +1,13 @@
 package com.joaopaulofg.coreservice.user;
 
+import com.joaopaulofg.coreservice.company.Company;
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "users")
@@ -41,6 +39,10 @@ public class User {
     private LocalDate createdAt;
 
     private LocalDate updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 
     @PrePersist
     protected void onCreate() {
