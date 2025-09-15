@@ -2,21 +2,24 @@
 -- Tabelas principais
 -- ======================================================
 
--- Tabela de usuários
-CREATE TABLE IF NOT EXISTS users (
-    id BIGSERIAL PRIMARY KEY,
-    first_name VARCHAR(100) NOT NULL,
-    last_name VARCHAR(100) NOT NULL,
-    email VARCHAR(150) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    head_line VARCHAR(255)
-);
-
 -- Tabela de empresas
 CREATE TABLE IF NOT EXISTS companies (
     id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(150) NOT NULL,
-    industry VARCHAR(100)
+    name VARCHAR(150) UNIQUE NOT NULL,
+    description TEXT
+);
+
+-- Tabela de usuários
+CREATE TABLE IF NOT EXISTS users (
+    id BIGSERIAL PRIMARY KEY,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    head_line VARCHAR(255),
+    created_at DATE NOT NULL DEFAULT CURRENT_DATE,
+    updated_at DATE NOT NULL DEFAULT CURRENT_DATE,
+    company_id BIGINT REFERENCES companies(id)
 );
 
 -- Tabela de vagas (jobs)
@@ -24,7 +27,8 @@ CREATE TABLE IF NOT EXISTS jobs (
     id BIGSERIAL PRIMARY KEY,
     title VARCHAR(150) NOT NULL,
     description TEXT,
-    company_id BIGINT REFERENCES companies(id)
+    posted_at DATE NOT NULL DEFAULT CURRENT_DATE,
+    company_id BIGINT NOT NULL REFERENCES companies(id)
 );
 
 -- ======================================================
@@ -32,32 +36,31 @@ CREATE TABLE IF NOT EXISTS jobs (
 -- ======================================================
 
 -- =====================
--- Usuários
--- =====================
-
-INSERT INTO users (first_name, last_name, email, password, head_line)
-VALUES 
-('Daniel', 'Abella', 'danielabella@example.com', 'senha123', 'Gerente de Projetos & Professor'),
-('Maria', 'Silva', 'mariasilva@example.com', 'senha123', 'Desenvolvedora Backend'),
-('João', 'Gomes', 'joaogomes@example.com', 'senha123', 'Analista de Sistemas'),
-('Ana', 'Costa', 'anacosta@example.com', 'senha123', 'Engenheira de Software'),
-('Lucas', 'Pereira', 'lucaspereira@example.com', 'senha123', 'Arquiteto de Software'),
-('Fernanda', 'Santos', 'fernandasantos@example.com', 'senha123', 'Product Manager'),
-('Rafael', 'Oliveira', 'rafaeloliveira@example.com', 'senha123', 'Desenvolvedor Frontend'),
-('Camila', 'Almeida', 'camilaalmeida@example.com', 'senha123', 'UX Designer'),
-('Gustavo', 'Martins', 'gustavomartins@example.com', 'senha123', 'Scrum Master'),
-('Patrícia', 'Rodrigues', 'patriciarodrigues@example.com', 'senha123', 'Especialista em QA');
-
--- =====================
 -- Empresas
 -- =====================
-INSERT INTO companies (name, industry, description)
+INSERT INTO companies (name, description)
 VALUES
-('Tech Solutions', 'Tecnologia', 'Empresa especializada em soluções de software corporativo'),
-('InnovateX', 'Consultoria', 'Consultoria em inovação e processos empresariais'),
-('DataCorp', 'Dados e Analytics', 'Serviços avançados de análise de dados e BI'),
-('WebFactory', 'Desenvolvimento Web', 'Agência focada em desenvolvimento de sites e apps'),
-('CloudNine', 'Cloud Computing', 'Especialista em soluções de cloud e infraestrutura');
+('Tech Solutions', 'Empresa especializada em soluções de software corporativo'),
+('InnovateX', 'Consultoria em inovação e processos empresariais'),
+('DataCorp', 'Serviços avançados de análise de dados e BI'),
+('WebFactory', 'Agência focada em desenvolvimento de sites e apps'),
+('CloudNine', 'Especialista em soluções de cloud e infraestrutura');
+
+-- =====================
+-- Usuários
+-- =====================
+INSERT INTO users (first_name, last_name, email, password, head_line, company_id)
+VALUES 
+('Daniel', 'Abella', 'danielabella@example.com', 'senha123', 'Gerente de Projetos & Professor', 1),
+('Maria', 'Silva', 'mariasilva@example.com', 'senha123', 'Desenvolvedora Backend', 2),
+('João', 'Gomes', 'joaogomes@example.com', 'senha123', 'Analista de Sistemas', 3),
+('Ana', 'Costa', 'anacosta@example.com', 'senha123', 'Engenheira de Software', 1),
+('Lucas', 'Pereira', 'lucaspereira@example.com', 'senha123', 'Arquiteto de Software', 4),
+('Fernanda', 'Santos', 'fernandasantos@example.com', 'senha123', 'Product Manager', 2),
+('Rafael', 'Oliveira', 'rafaeloliveira@example.com', 'senha123', 'Desenvolvedor Frontend', 5),
+('Camila', 'Almeida', 'camilaalmeida@example.com', 'senha123', 'UX Designer', 4),
+('Gustavo', 'Martins', 'gustavomartins@example.com', 'senha123', 'Scrum Master', 3),
+('Patrícia', 'Rodrigues', 'patriciarodrigues@example.com', 'senha123', 'Especialista em QA', 1);
 
 -- =====================
 -- Vagas

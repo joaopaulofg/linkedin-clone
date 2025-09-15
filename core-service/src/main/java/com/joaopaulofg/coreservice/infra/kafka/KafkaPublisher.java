@@ -1,5 +1,6 @@
 package com.joaopaulofg.coreservice.infra.kafka;
 
+import com.joaopaulofg.coreservice.company.Company;
 import com.joaopaulofg.coreservice.company.dtos.CompanyDto;
 import com.joaopaulofg.coreservice.user.User;
 import com.joaopaulofg.coreservice.user.dtos.UserDto;
@@ -21,14 +22,9 @@ public class KafkaPublisher {
         kafkaTemplate.send("user-events", "USER_CREATED", userCreatedEvent);
     }
 
-    public void sendCompanyCreatedEvent(CompanyDto companyDto) {
-        kafkaTemplate.send("company-events", "COMPANY_CREATED", companyDto);
+    public void sendCompanyCreatedEvent(Company company) {
+        CompanyCreatedEvent companyCreatedEvent = CompanyCreatedEvent.fromEntity(company);
+        kafkaTemplate.send("company-events", "COMPANY_CREATED", companyCreatedEvent);
     }
 
-//    public void sendUserHiredEvent(Long userId, Long companyId) {
-//        Map<String, Object> payload = new HashMap<>();
-//        payload.put("userId", userId);
-//        payload.put("companyId", companyId);
-//        kafkaTemplate.send("user-events", "USER_HIRED", payload);
-//    }
 }

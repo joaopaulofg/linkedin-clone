@@ -2,6 +2,7 @@ package com.joaopaulofg.coreservice.company;
 
 import com.joaopaulofg.coreservice.company.dtos.CompanyDto;
 import com.joaopaulofg.coreservice.company.dtos.CreateCompanyRequest;
+import com.joaopaulofg.coreservice.infra.kafka.KafkaPublisher;
 import com.joaopaulofg.coreservice.user.User;
 import com.joaopaulofg.coreservice.user.UserMapper;
 import com.joaopaulofg.coreservice.user.UserRepository;
@@ -20,9 +21,12 @@ public class CompanyService {
     private final UserRepository userRepository;
     private final CompanyMapper companyMapper;
     private final UserMapper userMapper;
+    private final KafkaPublisher kafkaPublisher;
 
     public CompanyDto createCompany(CreateCompanyRequest request){
-        return companyMapper.toCompanyDto(companyRepository.save(companyMapper.toCompany(request)));
+        Company savedCompany = companyRepository.save(companyMapper.toCompany(request));
+        kafkaPublisher.sendCompanyCreatedEvent(savedCompany);
+        return companyMapper.toCompanyDto(savedCompany);
     }
 
     public CompanyDto getCompanyById(Long id){

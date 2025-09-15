@@ -1,6 +1,8 @@
 package com.joaopaulofg.peoplegraphservice.service;
 
+import com.joaopaulofg.peoplegraphservice.domain.Company;
 import com.joaopaulofg.peoplegraphservice.domain.User;
+import com.joaopaulofg.peoplegraphservice.repository.CompanyRepository;
 import com.joaopaulofg.peoplegraphservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,12 +14,16 @@ import java.util.ArrayList;
 public class PeopleGraphService {
 
     private final UserRepository userRepository;
+    private final CompanyRepository companyRepository;
 
-    public User createUserNode(User user) {
-        return userRepository.save(user);
+    public void createUserNode(User user) {
+        userRepository.save(user);
     }
 
-    // conectar usuários
+    public void createCompany(Company company) {
+        companyRepository.save(company);
+    }
+
     public void connectUsers(Long userId, Long targetId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User " + userId + " not found"));
@@ -28,6 +34,18 @@ public class PeopleGraphService {
             user.setConnections(new ArrayList<>());
         }
         user.getConnections().add(target);
+        userRepository.save(user);
+    }
+
+    public void addWorkedAt(Long userId, Long companyId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User " + userId + " not found"));
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(() -> new RuntimeException("Company " + companyId + " not found"));
+        if(user.getWorkedAts() == null) {
+            user.setWorkedAts(new ArrayList<>());
+        }
+        user.getWorkedAts().add(company);
         userRepository.save(user);
     }
 }

@@ -20,5 +20,11 @@ public class PeopleGraphController {
         peopleGraphService.connectUsers(userId, targetId);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/worked/{userId}/{companyId}")
+    public ResponseEntity<Void> addWorkedAt(@PathVariable Long userId, @PathVariable Long companyId) {
+        peopleGraphService.addWorkedAt(userId, companyId);
+        return ResponseEntity.ok().build();
+    }
 }
 

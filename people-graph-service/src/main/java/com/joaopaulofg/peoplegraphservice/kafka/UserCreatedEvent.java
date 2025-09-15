@@ -1,4 +1,4 @@
-package com.joaopaulofg.peoplegraphservice.domain;
+package com.joaopaulofg.peoplegraphservice.kafka;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +12,4 @@ public class UserCreatedEvent {
     private String email;
     private String headLine;
     private String company;
-
-    // getters e setters
 }
