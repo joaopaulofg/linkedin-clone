@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-14T17:26:33-0300",
-    comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.6 (Oracle Corporation)"
+    date = "2025-09-15T14:16:21-0300",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.8 (Eclipse Adoptium)"
 )
 @Component
 public class AuthMapperImpl implements AuthMapper {
@@ -23,10 +23,10 @@ public class AuthMapperImpl implements AuthMapper {
         User.UserBuilder user = User.builder();
 
         user.email( request.email() );
-        user.password( request.password() );
         user.firstName( request.firstName() );
-        user.lastName( request.lastName() );
         user.headLine( request.headLine() );
+        user.lastName( request.lastName() );
+        user.password( request.password() );
 
         return user.build();
     }
@@ -37,15 +37,17 @@ public class AuthMapperImpl implements AuthMapper {
             return null;
         }
 
+        Long id = null;
         String email = null;
         String firstName = null;
         String lastName = null;
 
+        id = user.getId();
         email = user.getEmail();
         firstName = user.getFirstName();
         lastName = user.getLastName();
 
-        AuthRegisterResponse authRegisterResponse = new AuthRegisterResponse( email, firstName, lastName );
+        AuthRegisterResponse authRegisterResponse = new AuthRegisterResponse( id, email, firstName, lastName );
 
         return authRegisterResponse;
     }

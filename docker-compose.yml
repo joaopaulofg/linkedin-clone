@@ -56,6 +56,7 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./init/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U linkedin -d core_service"]
       interval: 5s
@@ -95,6 +96,7 @@ services:
       - "7474:7474"
     volumes:
       - neo4j_data:/data
+      - ./init/neo4j/init.cypher:/var/lib/neo4j/import/init.cypher
     healthcheck:
       test: ["CMD", "cypher-shell", "-u", "neo4j", "-p", "password", "RETURN 1"]
       interval: 10s
