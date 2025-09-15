@@ -1,0 +1,15 @@
+C:\Users\jptim\Documents\Unifacisa\linkedin-clone\core-service\src\main\java\com\joaopaulofg\coreservice\auth\AuthController.java
+C:\Users\jptim\Documents\Unifacisa\linkedin-clone\core-service\src\main\java\com\joaopaulofg\coreservice\auth\AuthMapper.java
+C:\Users\jptim\Documents\Unifacisa\linkedin-clone\core-service\src\main\java\com\joaopaulofg\coreservice\auth\AuthService.java
+C:\Users\jptim\Documents\Unifacisa\linkedin-clone\core-service\src\main\java\com\joaopaulofg\coreservice\auth\dtos\AuthLoginRequest.java
+C:\Users\jptim\Documents\Unifacisa\linkedin-clone\core-service\src\main\java\com\joaopaulofg\coreservice\auth\dtos\AuthLoginResponse.java
+C:\Users\jptim\Documents\Unifacisa\linkedin-clone\core-service\src\main\java\com\joaopaulofg\coreservice\auth\dtos\AuthRegisterRequest.java
+C:\Users\jptim\Documents\Unifacisa\linkedin-clone\core-service\src\main\java\com\joaopaulofg\coreservice\auth\dtos\AuthRegisterResponse.java
+C:\Users\jptim\Documents\Unifacisa\linkedin-clone\core-service\src\main\java\com\joaopaulofg\coreservice\CoreServiceApplication.java
+C:\Users\jptim\Documents\Unifacisa\linkedin-clone\core-service\src\main\java\com\joaopaulofg\coreservice\infra\security\JwtAuthenticationFilter.java
+C:\Users\jptim\Documents\Unifacisa\linkedin-clone\core-service\src\main\java\com\joaopaulofg\coreservice\infra\security\JwtProvider.java
+C:\Users\jptim\Documents\Unifacisa\linkedin-clone\core-service\src\main\java\com\joaopaulofg\coreservice\infra\security\SecurityConfig.java
+C:\Users\jptim\Documents\Unifacisa\linkedin-clone\core-service\src\main\java\com\joaopaulofg\coreservice\user\User.java
+C:\Users\jptim\Documents\Unifacisa\linkedin-clone\core-service\src\main\java\com\joaopaulofg\coreservice\user\UserEmailAlreadyRegisteredException.java
+C:\Users\jptim\Documents\Unifacisa\linkedin-clone\core-service\src\main\java\com\joaopaulofg\coreservice\user\UserRepository.java
+C:\Users\jptim\Documents\Unifacisa\linkedin-clone\core-service\src\main\java\com\joaopaulofg\coreservice\user\UserService.java

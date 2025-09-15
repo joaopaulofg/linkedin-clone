@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/core_service
-    username: aaaa
-    password: aaaa
+    url: jdbc:postgresql://localhost:5433/meubanco
+    username: joao
+    password: senha123
     driver-class-name: org.postgresql.Driver
 
   jpa:
