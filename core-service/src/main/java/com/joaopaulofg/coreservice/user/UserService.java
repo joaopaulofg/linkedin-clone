@@ -1,15 +1,13 @@
 package com.joaopaulofg.coreservice.user;
 
-import com.joaopaulofg.coreservice.infra.security.JwtProvider;
 import com.joaopaulofg.coreservice.user.dtos.UserDto;
+import com.joaopaulofg.coreservice.user.exceptions.EmailAlreadyExistsException;
+import com.joaopaulofg.coreservice.user.exceptions.UserNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -22,7 +20,7 @@ public class UserService {
 
     public User register(User newUser) {
         if(userRepository.findByEmail(newUser.getEmail()).isPresent()) {
-            throw new UserEmailAlreadyRegisteredException("Email already registered");
+            throw new EmailAlreadyExistsException("Email already registered");
         }
 
         User user = User.builder()
@@ -47,7 +45,6 @@ public class UserService {
                 .map(userMapper::toUserDto)
                 .orElseThrow(() -> new UserNotFoundException("Usuário não encontrado"));
     }
-
 
     public List<UserDto> getAllUsers() {
         return StreamSupport.stream(userRepository.findAll().spliterator(), false)
