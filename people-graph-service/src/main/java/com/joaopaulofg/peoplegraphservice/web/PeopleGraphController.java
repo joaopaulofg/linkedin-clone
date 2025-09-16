@@ -26,5 +26,12 @@ public class PeopleGraphController {
         peopleGraphService.addWorkedAt(userId, companyId);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/follow/{followerId}/{followedId}")
+    public ResponseEntity<Void> followUser(@PathVariable Long followerId, @PathVariable Long followedId) {
+        peopleGraphService.followUser(followerId, followedId);
+        return ResponseEntity.ok().build();
+    }
+
 }
 

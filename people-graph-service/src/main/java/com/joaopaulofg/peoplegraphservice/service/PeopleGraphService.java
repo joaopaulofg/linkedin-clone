@@ -48,5 +48,15 @@ public class PeopleGraphService {
         user.getWorkedAts().add(company);
         userRepository.save(user);
     }
+
+    public void followUser(Long followerId, Long followedId) {
+        User follower = userRepository.findById(followerId)
+                .orElseThrow(() -> new RuntimeException("User " + followerId + " not found"));
+        User followed = userRepository.findById(followedId)
+                .orElseThrow(() -> new RuntimeException("User " + followedId + " not found"));
+
+        follower.getFollows().add(followed);
+        userRepository.save(follower);
+    }
 }
 

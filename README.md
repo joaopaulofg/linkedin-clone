@@ -33,40 +33,39 @@ Comunicação entre serviços via **Apache Kafka**. Orquestração com **Docker 
 
 ----------
 
-## Estrutura do repositório (resumida)
+## 🏗️ Estrutura do repositório (resumida)
 
 ```
 linkedin-clone/
 ├─ core-service/
-│     src/
-│    ├─ main/
-│    │  ├─ java/com/joaopaulofg/coreservice/
-│    │  │  ├─ auth/       
-│    │  │  ├─ company/          
-│    │  │  ├─ config/      # KafkaProducer configurations
-│    │  │  ├─ infra/       # Kafka & Security
-│    │  │  ├─ job/          
-│    │  │  ├─ user/            
-│    │  │  └─ CoreServiceApplication.java
-│    │  └─ resources/
-│    │     ├─ application.yml   # Configurações Spring Boot (DB, Kafka, JWT, etc.)
-│    │     └
-│    └─ test/java/com/joaopaulofg/coreservice/   # Testes unitários e de integração
+│    src/
+│    └─ main/
+│      ├─ java/com/joaopaulofg/coreservice/
+│      │  ├─ auth/       
+│      │  ├─ company/          
+│      │  ├─ config/      # KafkaProducer configurations
+│      │  ├─ infra/       # Kafka & Security
+│      │  ├─ job/          
+│      │  ├─ user/            
+│      │  └─ CoreServiceApplication.java
+│      └─ resources/
+│         └─ application.yml   # Configurações Spring Boot (DB, Kafka, JWT, etc.)
+│         
+│    
 │
 ├─ people-graph-service/
 │   src/
-│    ├─ main/
-│    │  ├─ java/com/joaopaulofg/peoplegraphserrvice/
-│    │  │  ├─ config/       
-│    │  │  ├─ domain/           
-│    │  │  ├─ kafka/        # KafkaConsumer configurations
-│    │  │  ├─ repository/          
-│    │  │  ├─ service/              
-│    │  │  └─ PeopleGraphServiceApplication.java
-│    │  └─ resources/
-│    │     ├─ application.yml   # Configurações Spring Boot (Neo4j, Kafka)
-│    │     
-│    └─ test/java/com/example/graph/ # Testes unitários e de integração
+│    └─ main/
+│      ├─ java/com/joaopaulofg/peoplegraphservice/
+│      │  ├─ config/
+│      │  ├─ domain/
+│      │  ├─ kafka/        # KafkaConsumer configurations
+│      │  ├─ repository/          
+│      │  ├─ service/              
+│      │  └─ PeopleGraphServiceApplication.java
+│      └─ resources/
+│         └─ application.yml   # Configurações Spring Boot (Neo4j, Kafka)
+│
 ├─ init/
 │   ├─ neo4j/
 │   │   └─ init.cypher          # Script inicial do Neo4j (criação de nós/relacionamentos)
@@ -79,7 +78,7 @@ linkedin-clone/
 
 ----------
 
-## Rodando tudo (Docker Compose)
+## 🚀 Rodando tudo (Docker Compose)
 
 1.  Na raiz do projeto:
     
@@ -199,7 +198,7 @@ docker logs -f people_graph_service_app`
 
 ----------
 
-## Endpoints principais
+## 📚 Endpoints principais
 
 ### Core Service (`:8080`)
 
@@ -231,31 +230,14 @@ docker logs -f people_graph_service_app`
     
 ----------
 
-## Exemplos de requisições (curl)
+## 🧪 Testing with Postman
 
-Criar usuários (via core-service):
+Import the provided `collection: postman-collection.json`
 
-`curl -X POST  http://localhost:8080/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"email":"danielabella@example.com","password":"senha123","firstName":"Daniel","lastName":"Abella","headLine":"Gerente de Projetos & Professor"}'` 
+Collection Variables:
 
-`curl -X POST  http://localhost:8080/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"email":"joaogomes@example.com","password":"senha123","firstName":"João","lastName":"Gomes","headLine":"Desenvolvedor Backend"}'` 
-
-Criar empresa:
-`curl -X POST http://localhost:8080/companies \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Tech Solutions","industry":"Tecnologia","description":"Empresa de software"}'`
-
-
-Conectar usuários (people-graph):
-
-`curl -X POST http://localhost:8081/graph/connect/1/2` 
-
-Registrar relação "worked at":
-
-`curl -X POST "http://localhost:8081/graph/worked/1/2"` 
+- core_service_url: `http://localhost:8080/`
+- graph_service_url: `http://localhost:8081/`
 
 ----------
 

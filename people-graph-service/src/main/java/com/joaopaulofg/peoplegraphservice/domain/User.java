@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Node("User")
@@ -23,8 +25,11 @@ public class User {
     private String email;
 
     @Relationship(type = "CONNECTED_TO")
-    private List<User> connections;
+    private List<User> connections = new ArrayList<>();
 
     @Relationship(type = "WORKED_AT")
-    private List<Company> workedAts;
+    private List<Company> workedAts = new ArrayList<>();
+
+    @Relationship(type = "FOLLOWS")
+    private List<User> follows = new ArrayList<>();
 }

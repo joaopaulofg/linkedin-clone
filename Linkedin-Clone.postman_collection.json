@@ -1,0 +1,330 @@
+{
+	"info": {
+		"_postman_id": "2bfb036d-038b-4a07-8c0f-9e9d8747170f",
+		"name": "Linkedin-Clone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37333895"
+	},
+	"item": [
+		{
+			"name": "core-service",
+			"item": [
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"magdalia@example.com\",\r\n    \"password\": \"senhaSegura456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "  {\r\n    \"email\": \"magdalia@example.com\",\r\n    \"password\": \"senhaSegura456\",\r\n    \"firstName\": \"Magdalia\",\r\n    \"lastName\": \"Gomes\",\r\n    \"headLine\": \"Gerente de Soluções\"\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "getAllUsers",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsaW5rZWRpbi1jbG9uZSIsInN1YiI6ImpvYW9AdW5pZmFjaXNhLmNvbSIsImlhdCI6MTc1NzkzNzg5NiwiZXhwIjoxNzU4MDI0Mjk2fQ.xhPeP9vHV-WHbSG1DRa1LE9yoX1fkYQgOjwMKfT7vhc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"login\": \"joaaopaulof\",\n  \"password\": \"123456789\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getUserById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsaW5rZWRpbi1jbG9uZSIsInN1YiI6ImpvYW9AdW5pZmFjaXNhLmNvbSIsImlhdCI6MTc1NzkzNzg5NiwiZXhwIjoxNzU4MDI0Mjk2fQ.xhPeP9vHV-WHbSG1DRa1LE9yoX1fkYQgOjwMKfT7vhc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/2",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Companies",
+					"item": [
+						{
+							"name": "createCompany",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsaW5rZWRpbi1jbG9uZSIsInN1YiI6Im1hZ2RhbGlhQGV4YW1wbGUuY29tIiwiaWF0IjoxNzU3OTU5NzYzLCJleHAiOjE3NTgwNDYxNjN9.-Qiln9_MVroOzR5eyTWxJRXDLRI3RNwOQi_aqB5nTWI",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Virtus\",\r\n    \"description\": \"Núcleo de Pesquisa, Desenvolvimento e Inovação em Tecnologia da Informação, Comunicação e Automação - CEEI/UFCG\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/companies",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"companies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getCompany",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsaW5rZWRpbi1jbG9uZSIsInN1YiI6ImpvYW9AdW5pZmFjaXNhLmNvbSIsImlhdCI6MTc1Nzk0MTc1MiwiZXhwIjoxNzU4MDI4MTUyfQ.RfXx2HpVtxI1zwJhiCV-s6IhMB8DRvlVEEmENr4AuXQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/companies/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"companies",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createJob",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsaW5rZWRpbi1jbG9uZSIsInN1YiI6ImpvYW9AdW5pZmFjaXNhLmNvbSIsImlhdCI6MTc1Nzk0MTc1MiwiZXhwIjoxNzU4MDI4MTUyfQ.RfXx2HpVtxI1zwJhiCV-s6IhMB8DRvlVEEmENr4AuXQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"title\": \"Analista de Dados\",\r\n  \"description\": \"Extrair, transformar e carregar dados, criar dashboards no Power BI, análise de métricas de negócios.\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/companies/1/jobs",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"companies",
+										"1",
+										"jobs"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "hireUser",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsaW5rZWRpbi1jbG9uZSIsInN1YiI6ImpvYW9AdW5pZmFjaXNhLmNvbSIsImlhdCI6MTc1Nzk0MjUyMSwiZXhwIjoxNzU4MDI4OTIxfQ.CMkCyfY90eOVzN_DHD3oramvTG8l7H9rL9tivkC0C1c",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/companies/1/hire/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"companies",
+										"1",
+										"hire",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "people-graph-service",
+			"item": [
+				{
+					"name": "connectUsers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl2}}/graph/connect/1/3",
+							"host": [
+								"{{baseUrl2}}"
+							],
+							"path": [
+								"graph",
+								"connect",
+								"1",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addWorkedAt",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl2}}/graph/worked/1/6",
+							"host": [
+								"{{baseUrl2}}"
+							],
+							"path": [
+								"graph",
+								"worked",
+								"1",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
