@@ -7,8 +7,8 @@ import com.joaopaulofg.coreservice.user.exceptions.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -39,12 +39,6 @@ public class UserService {
         return savedUser;
     }
 
-    public boolean login(String email,  String password) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("Usuário não encontrado"));
-        return passwordEncoder.matches(password, user.getPassword());
-    }
-
     public UserDto getUserById(long id) {
         return userRepository.findById(id)
                 .map(userMapper::toUserDto)
@@ -57,4 +51,7 @@ public class UserService {
                 .toList();
     }
 
+    public Optional<User> findByEmail(String username) {
+        return userRepository.findByEmail(username);
+    }
 }

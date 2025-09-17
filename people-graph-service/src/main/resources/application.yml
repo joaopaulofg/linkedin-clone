@@ -13,3 +13,7 @@ spring:
     consumer:
       group-id: people-graph-group
       auto-offset-reset: earliest
+
+jwt:
+  secret: JY3nG8f9vZ1KxL6sQp2dRvM4tH5yZ7aB8cD9eF0gH1iJ2kL3
+  expiration: 86400000            # expiração em ms (1h)

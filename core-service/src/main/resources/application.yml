@@ -23,5 +23,5 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 jwt:
-  secret: meuSegredoSuperSecreto123  # chave usada para assinar o token
-  expiration: 3600000                # expiração em ms (1h)
+  secret: JY3nG8f9vZ1KxL6sQp2dRvM4tH5yZ7aB8cD9eF0gH1iJ2kL3
+  expiration: 86400000            # expiração em ms (1h)
