@@ -31,7 +31,10 @@ public class PeopleGraphService {
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }
-    public List<Company> getCompanies() {}
+
+    public List<Company> getCompanies() {
+        return companyRepository.findAll();
+    }
 
     public void connectUsers(Long userId, Long targetId) {
         User user = getUserOrThrow(userId);
