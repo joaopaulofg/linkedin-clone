@@ -218,15 +218,21 @@ docker logs -f people_graph_service_app`
 
 ### People Graph Service (`:8081`)
 
+-   `GET /graph` — todos os usuario cadastrados).
+
 -   `POST /graph/connect/{userId}/{targetId}` — cria relacionamento `CONNECTED_TO` entre dois Users.
-    
+
+-   `GET /graph/{userId}/connections` — busca as conexões do usuario.
+
+-   `POST /graph/follow/{followerId}/{followedId}` — cria relacionamento `FOLLOWS` entre dois Users.
+
+-   `GET /graph/{userId}/following` — busca os usuarios que determinado User segue.
+
 -   `POST /graph/worked/{userId}/{companyId}` — cria relacionamento `WORKED_AT`  entre User e Company.
     
 -   `GET /graph/suggestions/{userId}` — recomendações (2º grau).
     
 -   `GET /graph/shortest-path?from=&to=` — caminho mínimo (Cypher shortestPath).
-    
--   `GET /graph/people-you-may-know` — recomendações gerais.
     
 ----------
 

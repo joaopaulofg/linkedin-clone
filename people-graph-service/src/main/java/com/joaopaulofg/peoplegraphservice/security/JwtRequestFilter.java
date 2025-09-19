@@ -33,27 +33,30 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         // Tenta pegar o token do header ou cookie
-        String token = null;
+        String jwtToken = null;
 
-        String bearerToken = request.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            token = bearerToken.substring(7);
-        } else {
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("token")) {
-                        token = cookie.getValue();
-                        break;
-                    }
+        // 1️⃣ Verifica se o token está no cookie "token"
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if ("token".equals(cookie.getName())) {
+                    jwtToken = cookie.getValue();
+                    break;
                 }
             }
         }
 
-        if (token != null && jwtUtil.validateToken(token)) {
+        // 2️⃣ Se não tiver cookie, verifica o header Authorization
+        if (jwtToken == null) {
+            String requestTokenHeader = request.getHeader("Authorization");
+            if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
+                jwtToken = requestTokenHeader.substring(7);
+            }
+        }
+
+        if (jwtToken != null && jwtUtil.validateToken(jwtToken)) {
             // Extrai dados do token
-            String username = jwtUtil.extractUsername(token);
-            Long userId = jwtUtil.extractUserId(token);
+            String username = jwtUtil.extractUsername(jwtToken);
+            Long userId = jwtUtil.extractUserId(jwtToken);
 
             // Cria a autenticação sem UserDetails
             UsernamePasswordAuthenticationToken authentication =

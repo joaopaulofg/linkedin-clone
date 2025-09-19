@@ -2,12 +2,16 @@ package com.joaopaulofg.peoplegraphservice.service;
 
 import com.joaopaulofg.peoplegraphservice.domain.Company;
 import com.joaopaulofg.peoplegraphservice.domain.User;
+import com.joaopaulofg.peoplegraphservice.domain.dto.ConnectSuggestionDto;
+import com.joaopaulofg.peoplegraphservice.domain.dto.ShortestPathDto;
 import com.joaopaulofg.peoplegraphservice.repository.CompanyRepository;
 import com.joaopaulofg.peoplegraphservice.repository.UserRepository;
+import com.joaopaulofg.peoplegraphservice.utils.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -24,11 +28,14 @@ public class PeopleGraphService {
         companyRepository.save(company);
     }
 
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+    public List<Company> getCompanies() {}
+
     public void connectUsers(Long userId, Long targetId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User " + userId + " not found"));
-        User target = userRepository.findById(targetId)
-                .orElseThrow(() -> new RuntimeException("User " + targetId + " not found"));
+        User user = getUserOrThrow(userId);
+        User target = getUserOrThrow(targetId);
 
         if(user.getConnections() == null) {
             user.setConnections(new ArrayList<>());
@@ -38,25 +45,48 @@ public class PeopleGraphService {
     }
 
     public void addWorkedAt(Long userId, Long companyId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User " + userId + " not found"));
+        User user = getUserOrThrow(userId);
         Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new RuntimeException("Company " + companyId + " not found"));
+                .orElseThrow(() -> new UserNotFoundException("Company " + companyId + " not found"));
+
         if(user.getWorkedAts() == null) {
             user.setWorkedAts(new ArrayList<>());
         }
+
         user.getWorkedAts().add(company);
         userRepository.save(user);
     }
 
     public void followUser(Long followerId, Long followedId) {
-        User follower = userRepository.findById(followerId)
-                .orElseThrow(() -> new RuntimeException("User " + followerId + " not found"));
-        User followed = userRepository.findById(followedId)
-                .orElseThrow(() -> new RuntimeException("User " + followedId + " not found"));
+        User follower = getUserOrThrow(followerId);
+        User followed = getUserOrThrow(followedId);
 
         follower.getFollows().add(followed);
         userRepository.save(follower);
+    }
+
+    public List<User> getUserConnections(Long userId) {
+        getUserOrThrow(userId);
+        return userRepository.getConnections(userId);
+    }
+
+    public List<User> getUserFollowing(Long userId) {
+        getUserOrThrow(userId);
+        return userRepository.getFollowing(userId);
+    }
+
+    public List<ConnectSuggestionDto> findSuggestions(Long userId) {
+        getUserOrThrow(userId);
+        return userRepository.findSuggestions(userId);
+    }
+
+    public List<User> findShortestPath(Long from, Long to) {
+        return userRepository.findShortestPath(from, to);
+    }
+
+    private User getUserOrThrow(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User " + userId + " not found"));
     }
 }
 

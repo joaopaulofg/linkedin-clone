@@ -19,7 +19,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"magdalia@example.com\",\r\n    \"password\": \"senhaSegura456\"\r\n}",
+									"raw": "{\r\n    \"email\": \"giusepp@example.com\",\r\n    \"password\": \"senhaSegura456\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -46,7 +46,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "  {\r\n    \"email\": \"magdalia@example.com\",\r\n    \"password\": \"senhaSegura456\",\r\n    \"firstName\": \"Magdalia\",\r\n    \"lastName\": \"Gomes\",\r\n    \"headLine\": \"Gerente de Soluções\"\r\n  }",
+									"raw": "  {\r\n    \"email\": \"giusepp@example.com\",\r\n    \"password\": \"senhaSegura456\",\r\n    \"firstName\": \"Giusepp\",\r\n    \"lastName\": \"Jr.\",\r\n    \"headLine\": \"Desenvolvedor de Senior\"\r\n  }",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -146,7 +146,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsaW5rZWRpbi1jbG9uZSIsInN1YiI6Im1hZ2RhbGlhQGV4YW1wbGUuY29tIiwiaWF0IjoxNzU3OTU5NzYzLCJleHAiOjE3NTgwNDYxNjN9.-Qiln9_MVroOzR5eyTWxJRXDLRI3RNwOQi_aqB5nTWI",
+											"value": "",
 											"type": "string"
 										}
 									]
@@ -280,6 +280,16 @@
 				{
 					"name": "connectUsers",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "sdsadsadasdasdasdasdasd",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -287,15 +297,15 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseUrl2}}/graph/connect/1/3",
+							"raw": "{{baseUrl2}}/graph/connect/3/7",
 							"host": [
 								"{{baseUrl2}}"
 							],
 							"path": [
 								"graph",
 								"connect",
-								"1",
-								"3"
+								"3",
+								"7"
 							]
 						}
 					},
@@ -319,6 +329,103 @@
 								"worked",
 								"1",
 								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserConnections",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl2}}/graph/3/connections",
+							"host": [
+								"{{baseUrl2}}"
+							],
+							"path": [
+								"graph",
+								"3",
+								"connections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserFollowing",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl2}}/graph/2/following",
+							"host": [
+								"{{baseUrl2}}"
+							],
+							"path": [
+								"graph",
+								"2",
+								"following"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findSuggestions",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl2}}/graph/suggestions/3",
+							"host": [
+								"{{baseUrl2}}"
+							],
+							"path": [
+								"graph",
+								"suggestions",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getShortestPath",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl2}}/graph/shortest-path?idFrom=3&idTo=6",
+							"host": [
+								"{{baseUrl2}}"
+							],
+							"path": [
+								"graph",
+								"shortest-path"
+							],
+							"query": [
+								{
+									"key": "idFrom",
+									"value": "3"
+								},
+								{
+									"key": "idTo",
+									"value": "6"
+								}
 							]
 						}
 					},
