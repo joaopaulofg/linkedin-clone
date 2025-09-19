@@ -82,26 +82,14 @@ linkedin-clone/
 
 1.  Na raiz do projeto:
     
-`docker-compose up -d --build` 
+`docker-compose up -d --build`
 
-2.  Verifique containers:
-
-`docker ps` 
-
-3.  Dados de inicialização:
+2. Dados de inicialização:
 
 -   core-service: init/postgres/init.sql é executado na criação do container (tabelas e dados iniciais).
 
--   people-graph-service: init/neo4j/init.cypher pode ser executado com o comando no terminal (após o container estar rodando):
+-   Execute o comando abaixo para já popular o banco do Neo4j com Users iniciais e conexões de exemplo:
 `docker exec -it neo4j_db cypher-shell -u neo4j -p password -f /var/lib/neo4j/import/init.cypher`
-
-4.  Logs (exemplo):
-    
-
-`docker logs -f core_service_app
-docker logs -f people_graph_service_app` 
-
-
 
 ----------
 
@@ -152,7 +140,7 @@ docker logs -f people_graph_service_app`
 
 -   :User { id: Long, firstName, lastName, email, headLine }
     
--   relações: `CONNECTED_TO`, `WORKED_AT` (com props `from`/`to`)
+-   relações: `CONNECTED_TO`, `WORKED_AT`, `FOLLOWS`  (com props `from`/`to`)
 
 **Company (node):**
 
