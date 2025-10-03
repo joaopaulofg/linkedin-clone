@@ -3,18 +3,24 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/core_service
-    username: aaaa
-    password: aaaa
+    url: jdbc:postgresql://db:5432/core_service
+    username: linkedin
+    password: linkedin123
     driver-class-name: org.postgresql.Driver
+  data:
+    redis:
+      host: redis
+      port: 6379
+  cache:
+    type: redis
 
   jpa:
     hibernate:
-      ddl-auto: update   # Pode trocar para validate ou none em produção
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true       # Exibe as queries no console
+    show-sql: true
 
   kafka:
     bootstrap-servers: kafka:9092
@@ -22,6 +28,11 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
+logging:
+  level:
+    org.springframework.cache: DEBUG
+    org.springframework.data.redis.cache: DEBUG
+
 jwt:
-  secret: meuSegredoSuperSecreto123  # chave usada para assinar o token
-  expiration: 3600000                # expiração em ms (1h)
+  secret: JY3nG8f9vZ1KxL6sQp2dRvM4tH5yZ7aB8cD9eF0gH1iJ2kL3
+  expiration: 86400000

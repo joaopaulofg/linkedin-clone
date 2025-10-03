@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-15T14:16:22-0300",
-    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.43.0.v20250819-1513, environment: Java 21.0.8 (Eclipse Adoptium)"
+    date = "2025-10-02T21:16:37-0300",
+    comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.6 (Oracle Corporation)"
 )
 @Component
 public class JobMapperImpl implements JobMapper {
@@ -43,8 +43,8 @@ public class JobMapperImpl implements JobMapper {
 
         Job.JobBuilder job = Job.builder();
 
-        job.description( request.description() );
         job.title( request.title() );
+        job.description( request.description() );
 
         return job.build();
     }

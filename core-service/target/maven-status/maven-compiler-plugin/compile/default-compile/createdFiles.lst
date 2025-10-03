@@ -1,1 +1,2 @@
 com\joaopaulofg\coreservice\auth\AuthMapperImpl.class
+com\joaopaulofg\coreservice\config\redis\RedisCacheConfig.class

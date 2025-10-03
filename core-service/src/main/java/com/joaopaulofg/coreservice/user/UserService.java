@@ -5,6 +5,8 @@ import com.joaopaulofg.coreservice.user.dtos.UserDto;
 import com.joaopaulofg.coreservice.user.exceptions.EmailAlreadyExistsException;
 import com.joaopaulofg.coreservice.user.exceptions.UserNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -20,6 +22,7 @@ public class UserService {
     private final UserMapper userMapper;
     private final KafkaPublisher kafkaPublisher;
 
+    @CacheEvict(value = "users", allEntries = true)
     public User register(User newUser) {
         if(userRepository.findByEmail(newUser.getEmail()).isPresent()) {
             throw new EmailAlreadyExistsException("Email already registered");
@@ -45,6 +48,7 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("Usuário não encontrado"));
     }
 
+    @Cacheable(value = "users")
     public List<UserDto> getAllUsers() {
         return StreamSupport.stream(userRepository.findAll().spliterator(), false)
                 .map(userMapper::toUserDto)
